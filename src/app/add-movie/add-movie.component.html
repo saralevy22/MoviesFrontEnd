@@ -1,0 +1,54 @@
+<div class="text-center">
+    <div class="modal-header text-right">
+        <h4 class="modal-title" id="modal-basic-title">הוספת סרט</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addMovieForm" class="text-right align-items-right" (ngSubmit)="submit()">
+            <div class="form-group">
+                <label for="movieName">שם הסרט *</label>
+                <input formControlName="movieName" id="movieName" class="form-control" type="text" name="" value="">
+                <div *ngIf="formControls.movieName.touched && formControls.movieName.invalid" class="alert alert-danger">
+                    <div *ngIf="formControls.movieName.errors.required">נא להזין את שם הסרט</div>
+                    <div *ngIf="formControls.movieName.errors.maxlength">מוגבל ל30 תווים</div>
+                    <div *ngIf="formControls.movieName.errors.isExist">לא ניתן להוסיף סרט קיים</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="categorySelect">קטגוריה</label>
+                <select class="form-control" id="categorySelect" [(ngModel)]="categorySelect" formControlName="categry">
+                    <option [ngValue]="category.categoryName" *ngFor="let category of categories; let i = index">{{category.categoryName}}</option>
+                </select>
+                <div *ngIf="formControls.categry.touched && formControls.categry.invalid" class="alert alert-danger">
+                    <div *ngIf="formControls.categry.errors.required">נא לבחור קטגוריה</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="movieUrl">לינק לסרט *</label>
+                <input formControlName="movieUrl" id="movieUrl" class="form-control" type="text" name="" value="">
+                <div *ngIf="formControls.movieUrl.touched && formControls.movieUrl.invalid" class="alert alert-danger">
+                    <div *ngIf="formControls.movieUrl.errors.required">נא להזין לינק לסרט</div>
+                    <div *ngIf="formControls.movieUrl.errors.pattern">נא להזין לינק תקין</div>
+                     <!-- <div *ngIf="formControls.movieUrl.errors.urlNotExist">לינק לא קיים</div> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="posterUrl">לינק לפוסטר *</label>
+                <input formControlName="posterUrl" id="posterUrl" class="form-control" type="text" name="" value="">
+                <div *ngIf="formControls.posterUrl.touched && formControls.posterUrl.invalid" class="alert alert-danger">
+                    <div *ngIf="formControls.posterUrl.errors.required">נא להזין לינק לפוסטר</div>
+                    <div *ngIf="formControls.posterUrl.errors.pattern">נא להזין לינק תקין</div>
+                    <!-- <div *ngIf="formControls.posterUrl.errors.urlNotExist">לינק לא קיים</div> -->
+                </div>
+            </div>
+        </form>
+        <ngb-alert [type]="danger" class="alert show alert-danger fade alert-dismissible" (closed)="closeError()" *ngIf="errMsg">{{this.errMsg}}</ngb-alert>    
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="submit()" type="submit" [disabled]="!addMovieForm.valid">אישור</button>
+        <button type="button" class="btn btn-outline-dark" ngbAutofocus (click)="cancel()">ביטול</button>
+    </div>
+</div>
