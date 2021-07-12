@@ -35,7 +35,7 @@ export class MoviesComponent implements OnInit {
     this.movieService.getMovies().subscribe(data =>{
       this.movies = data.result;
       this.movieService.movies = this.movies;
-      if(this.categories?.length == 0){
+      if(this.movies?.length == 0){
         this.isError = true;
       }
       else{
